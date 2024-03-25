@@ -1,15 +1,15 @@
 <template>
   <div class="calculator">
-    <h1 style="color: #4fc08d;">Calculadora Aritmética</h1>
+    <h1 style="color: #4fc08d; font-size: 2rem;">Calculadora Aritmética</h1>
     <div class="input-fields">
-      <input type="number" v-model.number="num1" @input="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc;">
-      <select v-model="operator" @change="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc;">
+      <input type="number" v-model.number="num1" @input="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc; width: 30%;">
+      <select v-model="operator" @change="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc; width: 30%;">
         <option value="add">+</option>
         <option value="subtract">-</option>
         <option value="multiply">*</option>
         <option value="divide">/</option>
       </select>
-      <input type="number" v-model.number="num2" @input="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc;">
+      <input type="number" v-model.number="num2" @input="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc; width: 30%;">
     </div>
     <div class="result" style="color: #4fc08d;">
       <p>Resultado: {{ result }}</p>
@@ -52,13 +52,13 @@ export default {
 
 <style scoped>
 .calculator {
-  max-width: 400px;
+  max-width: 90%;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #fff; /* Alterado para branco */
-  height: 100%; /* Alterado para 100% */
+  background-color: #fff;
+  height: 100%;
 }
 
 .input-fields {
@@ -70,10 +70,23 @@ export default {
 
 input[type="number"], select {
   padding: 8px;
-  width: 100px;
+  width: 30%;
 }
 
 .result {
-  font-size: 18px;
+  font-size: 1.5rem;
+}
+
+/* Media query para dispositivos menores que 768px */
+@media screen and (max-width: 767px) {
+  .input-fields {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  input[type="number"], select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
 </style>
