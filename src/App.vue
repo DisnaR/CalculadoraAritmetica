@@ -1,24 +1,20 @@
 <template>
   <div class="calculator">
     <h1 style="color: #4fc08d; font-size: 2rem;">Calculadora Aritmética</h1>
-    <div class="input-fields">
-      <input type="number" v-model.number="num1" @input="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc; width: 30%;">
-      <select v-model="operator" @change="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc; width: 30%;">
-        <option value="add">+</option>
-        <option value="subtract">-</option>
-        <option value="multiply">*</option>
-        <option value="divide">/</option>
-      </select>
-      <input type="number" v-model.number="num2" @input="calculate" style="background-color: #f3f3f3; border: 1px solid #ccc; width: 30%;">
-    </div>
-    <div class="result" style="color: #4fc08d;">
-      <p>Resultado: {{ result }}</p>
-    </div>
+    <InputFields :num1="num1" :num2="num2" :operator="operator" @update:num1="num1 = $event" @update:num2="num2 = $event" @update:operator="operator = $event" />
+    <ResultDisplay :result="result" />
   </div>
 </template>
 
 <script>
+import InputFields from './InputFields.vue';
+import ResultDisplay from './ResultDisplay.vue';
+
 export default {
+  components: {
+    InputFields,
+    ResultDisplay
+  },
   data() {
     return {
       num1: 0,
@@ -27,20 +23,25 @@ export default {
       result: 0
     };
   },
+  watch: {
+    num1: 'calculate',
+    num2: 'calculate',
+    operator: 'calculate'
+  },
   methods: {
     calculate() {
       switch (this.operator) {
         case 'add':
-          this.result = this.num1 + this.num2;
+          this.result = parseFloat(this.num1) + parseFloat(this.num2);
           break;
         case 'subtract':
-          this.result = this.num1 - this.num2;
+          this.result = parseFloat(this.num1) - parseFloat(this.num2);
           break;
         case 'multiply':
-          this.result = this.num1 * this.num2;
+          this.result = parseFloat(this.num1) * parseFloat(this.num2);
           break;
         case 'divide':
-          this.result = this.num2 !== 0 ? this.num1 / this.num2 : 'Infinity';
+          this.result = parseFloat(this.num2) !== 0 ? parseFloat(this.num1) / parseFloat(this.num2) : 'Infinity';
           break;
         default:
           this.result = 0;
@@ -59,34 +60,5 @@ export default {
   border-radius: 5px;
   background-color: #fff;
   height: 100%;
-}
-
-.input-fields {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-input[type="number"], select {
-  padding: 8px;
-  width: 30%;
-}
-
-.result {
-  font-size: 1.5rem;
-}
-
-/* Media query para dispositivos menores que 768px */
-@media screen and (max-width: 767px) {
-  .input-fields {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  input[type="number"], select {
-    width: 100%;
-    margin-bottom: 10px;
-  }
 }
 </style>
